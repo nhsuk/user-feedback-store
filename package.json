@@ -7,7 +7,7 @@
     "test": "echo \"No tests yet...\""
   },
   "author": "",
-  "dependencies": {
+  "devDependencies": {
     "eslint": "^6.8.0",
     "eslint-config-nhsuk": "^1.0.0"
   }
