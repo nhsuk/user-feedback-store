@@ -1,13 +1,24 @@
-module.exports = (context, req) => {
-  context.log('JavaScript HTTP trigger function processed a request.');
+const database = require('./lib/database.js');
 
-  if (req.query.name || (req.body && req.body.name)) {
+module.exports = async (context, req) => {
+  if (req.body) {
+    try {
+      await database.saveInitialResponse({
+        answer: req.body.answer,
+      });
+    } catch (err) {
+      context.done(null, {
+        body: { error: err.message },
+        status: 400,
+      });
+    }
+
     context.done(null, {
-      body: `Hello ${req.query.name || req.body.name}`,
+      body: '',
     });
   } else {
     context.done(null, {
-      body: 'Please pass a name on the query string or in the request body',
+      body: 'Please pass a JSON request body',
       status: 400,
     });
   }
