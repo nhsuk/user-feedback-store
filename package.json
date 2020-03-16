@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "lint": "eslint .",
-    "test": "echo \"No tests yet...\""
+    "test": "jest"
   },
   "author": "",
   "devDependencies": {
@@ -12,6 +12,7 @@
     "eslint-config-nhsuk": "^1.0.0"
   },
   "dependencies": {
+    "jest": "^25.1.0",
     "mongodb": "^3.5.5"
   }
 }
