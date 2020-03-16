@@ -23,3 +23,7 @@ The default mongo connection string is `http://localhost` which can be changed b
 `npm test -- --watch` to continuously run tests while in development.
 
 `npm run lint` to run eslint.
+
+## Docs
+
+Code is documented in [jsdoc](https://jsdoc.app/) style.

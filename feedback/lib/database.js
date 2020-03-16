@@ -1,3 +1,7 @@
+/**
+ @module lib/database
+*/
+
 const mongoClient = require('mongodb').MongoClient;
 
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING;
@@ -6,6 +10,10 @@ const COLLECTION_NAME = 'feedback';
 
 const { validateInitialResponse, validateTextComments } = require('./validation.js');
 
+/**
+ * @param {Object} data - Data object to be saved into the database
+ * @returns {Promise}
+ */
 const insert = async (data) => {
   const client = await mongoClient.connect(CONNECTION_STRING);
   try {
@@ -19,13 +27,20 @@ const insert = async (data) => {
   }
 };
 
-module.exports.saveInitialResponse = async (payload) => {
+/**
+ * @param {Object} payload - data to save for the initial response
+ * @returns {Promise}
+ */
+module.exports.saveInitialResponse = (payload) => {
   const data = validateInitialResponse(payload);
   return insert(data);
 };
 
-module.exports.saveTextComments = async (payload) => {
+/**
+ * @param {Object} payload - data to save for the text comment response
+ * @returns {Promise}
+ */
+module.exports.saveTextComments = (payload) => {
   const data = validateTextComments(payload);
-
   return insert(data);
 };
