@@ -29,3 +29,38 @@ describe('validate initial response', () => {
     }).toThrow('answer must be true or false');
   });
 });
+
+describe('validate text comments', () => {
+  it('when comments are valid', () => {
+    const dirtyData = { comment: 'More cowbell' };
+    const cleanData = validation.validateTextComments(dirtyData);
+    expect(cleanData).toEqual(dirtyData);
+  });
+
+  it('when comments are not a string', () => {
+    const dirtyData = { comment: false };
+    expect(() => {
+      validation.validateTextComments(dirtyData);
+    }).toThrow('comment must be a string');
+  });
+
+  it('when comments are too long', () => {
+    const dirtyData = { comment: 'A'.repeat(1001) };
+    expect(() => {
+      validation.validateTextComments(dirtyData);
+    }).toThrow('comment too long');
+  });
+
+  it('when comments are long but not too long', () => {
+    const longString = 'A'.repeat(1000);
+    const dirtyData = { comment: longString };
+    const cleanData = validation.validateTextComments(dirtyData);
+    expect(cleanData).toEqual(dirtyData);
+  });
+
+  it('whitespace is trimmed', () => {
+    const dirtyData = { comment: '  a silly string with whitespace padding  ' };
+    const cleanData = validation.validateTextComments(dirtyData);
+    expect(cleanData).toEqual({ comment: 'a silly string with whitespace padding' });
+  });
+});

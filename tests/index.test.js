@@ -8,6 +8,11 @@ jest.mock('../feedback/lib/database.js');
 const database = require('../feedback/lib/database.js');
 
 describe('http trigger', () => {
+  beforeEach(() => {
+    database.saveInitialResponse.mockClear();
+    database.saveTextComments.mockClear();
+  });
+
   it('returns ok when answer=true', async () => {
     const request = {
       body: { answer: true },
@@ -52,5 +57,23 @@ describe('http trigger', () => {
     const request = {};
     const response = await httpFunction(context, request);
     expect(response).toEqual({ body: { error: 'Please pass a JSON request body' }, status: 400 });
+  });
+
+  test('returns ok when text comments are given', async () => {
+    const request = {
+      body: { comment: 'Needs more cowbell.' },
+    };
+    const response = await httpFunction(context, request);
+    expect(response).toEqual({ body: { ok: true } });
+    expect(database.saveTextComments).toBeCalledWith({ comment: 'Needs more cowbell.' });
+  });
+
+  test('calls the saveTextComments when no answer is given', async () => {
+    const request = {
+      body: {},
+    };
+    const response = await httpFunction(context, request);
+    expect(response).toEqual({ body: { ok: true } });
+    expect(database.saveTextComments).toBeCalledWith({});
   });
 });
