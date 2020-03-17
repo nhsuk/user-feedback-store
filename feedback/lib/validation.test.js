@@ -1,6 +1,6 @@
 /* global expect */
 
-const validation = require('../feedback/lib/validation.js');
+const validation = require('./validation.js');
 
 describe('validate initial response', () => {
   it('when answer is true', () => {

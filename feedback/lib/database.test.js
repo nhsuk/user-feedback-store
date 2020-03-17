@@ -2,7 +2,7 @@
 
 const { MongoClient } = require('mongodb');
 
-const database = require('../feedback/lib/database.js');
+const database = require('./database.js');
 
 describe('database', () => {
   let connection;

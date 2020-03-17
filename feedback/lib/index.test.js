@@ -1,11 +1,11 @@
 /* global expect jest */
 
-const httpFunction = require('../feedback/index.js');
-const { ValidationError } = require('../feedback/lib/validation.js');
-const context = require('./defaultContext.js');
+const httpFunction = require('../index.js');
+const { ValidationError } = require('./validation.js');
+const context = require('../../tests/defaultContext.js');
 
-jest.mock('../feedback/lib/database.js');
-const database = require('../feedback/lib/database.js');
+jest.mock('./database.js');
+const database = require('./database.js');
 
 describe('http trigger', () => {
   beforeEach(() => {
