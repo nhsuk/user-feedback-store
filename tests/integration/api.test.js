@@ -46,7 +46,8 @@ describe('API endpoint /satisfied/', () => {
     expect(data.length).toBe(1);
     expect(data[0]).toEqual(
       expect.objectContaining({
-        satisfied: true,
+        isSatisfied: true,
+        token: expect.stringMatching(UUID_REGEX),
       })
     );
   });
@@ -55,8 +56,8 @@ describe('API endpoint /satisfied/', () => {
 describe('API endpoint /comments/', () => {
   const getToken = async () => {
     const payload = { isSatisfied: true };
-    const response = await axios.post('http://localhost:7071/comments/', payload);
-    return response.token;
+    const response = await axios.post('http://localhost:7071/satisfied/', payload);
+    return response.data.token;
   };
 
   it('returns status ok response', async () => {
@@ -99,7 +100,7 @@ describe('API endpoint /comments/', () => {
 
     const payload = {
       comments: 'Could do with a bit more cowbell.',
-      token: response.token,
+      token: response.data.token,
     };
     await axios.post('http://localhost:7071/comments/', payload);
     const data = await db.collection('feedback').find({}).toArray();
@@ -109,7 +110,7 @@ describe('API endpoint /comments/', () => {
     expect(data[0]).toEqual(
       expect.objectContaining({
         comments: 'Could do with a bit more cowbell.',
-        satisfied: false,
+        isSatisfied: false,
       })
     );
   });

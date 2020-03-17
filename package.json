@@ -24,6 +24,7 @@
     "start-server-and-test": "^1.10.10"
   },
   "dependencies": {
-    "mongodb": "^3.5.5"
+    "mongodb": "^3.5.5",
+    "uuidv4": "^6.0.6"
   }
 }
