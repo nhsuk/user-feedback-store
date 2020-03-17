@@ -2,7 +2,7 @@
 
 const httpFunction = require('../index.js');
 const { ValidationError } = require('./validation.js');
-const context = require('../../tests/defaultContext.js');
+const context = require('../../tests/unit/defaultContext.js');
 
 jest.mock('./database.js');
 const database = require('./database.js');

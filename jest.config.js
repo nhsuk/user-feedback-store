@@ -1,4 +1,6 @@
 module.exports = {
-  preset: '@shelf/jest-mongodb',
-  setupFiles: ['./tests/setup.js'],
+  projects: [
+    'tests/unit/jest.config.js',
+    'tests/integration/jest.config.js',
+  ],
 };
