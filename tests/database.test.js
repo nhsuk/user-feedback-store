@@ -15,7 +15,7 @@ describe('database', () => {
         useNewUrlParser: true,
       }
     );
-    db = await connection.db('userfeedback');
+    db = connection.db('userfeedback');
   });
 
   beforeEach(async () => {
@@ -24,7 +24,6 @@ describe('database', () => {
 
   afterAll(async () => {
     await connection.close();
-    await db.close();
   });
 
   it('inserts true answer into database', async () => {
