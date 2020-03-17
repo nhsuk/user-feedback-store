@@ -28,7 +28,7 @@ const UUID_REGEX = /[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-
 
 describe('API endpoint /satisfied/', () => {
   it('returns status ok response', async () => {
-    const payload = { answer: true };
+    const payload = { isSatisfied: true };
     const response = await axios.post('http://localhost:7071/satisfied/', payload);
     expect(response.status).toEqual(200);
     expect(response.data).toEqual(
@@ -40,7 +40,7 @@ describe('API endpoint /satisfied/', () => {
   });
 
   it('saves into the database', async () => {
-    const payload = { answer: true };
+    const payload = { isSatisfied: true };
     await axios.post('http://localhost:7071/satisfied/', payload);
     const data = await db.collection('feedback').find({}).toArray();
     expect(data.length).toBe(1);
@@ -54,7 +54,7 @@ describe('API endpoint /satisfied/', () => {
 
 describe('API endpoint /comments/', () => {
   const getToken = async () => {
-    const payload = { answer: true };
+    const payload = { isSatisfied: true };
     const response = await axios.post('http://localhost:7071/comments/', payload);
     return response.token;
   };
@@ -94,7 +94,7 @@ describe('API endpoint /comments/', () => {
   });
 
   it('is associated with satisfaction response via token', async () => {
-    const satisfiedPayload = { answer: false };
+    const satisfiedPayload = { isSatisfied: false };
     const response = await axios.post('http://localhost:7071/satisfied/', satisfiedPayload);
 
     const payload = {
