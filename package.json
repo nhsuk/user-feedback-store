@@ -1,6 +1,6 @@
 {
-  "name": "",
-  "version": "",
+  "name": "user-feedback-store",
+  "version": "0.0.1",
   "description": "",
   "scripts": {
     "lint": "eslint .",
