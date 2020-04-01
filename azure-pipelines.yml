@@ -11,8 +11,6 @@ stages:
 - stage: Test
   jobs:
   - job: Test
-    pool:
-      vmImage: $(vmImageName)
 
     steps:
     - task: NodeTool@0
@@ -29,8 +27,6 @@ stages:
   displayName: Build stage
   jobs:
   - job: Build
-    pool:
-      vmImage: $(vmImageName)
 
     steps:
     - task: NodeTool@0
