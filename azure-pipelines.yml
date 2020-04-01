@@ -1,8 +1,13 @@
 
+# Run pipeline on master branch, pull-requests into master, and tags
 trigger:
   branches:
     include:
-    - '*'
+      - master
+      - refs/tags/*
+  pr:
+    - master
+
 
 pool:
   vmImage: 'ubuntu-latest'
