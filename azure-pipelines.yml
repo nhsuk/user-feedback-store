@@ -5,8 +5,8 @@ trigger:
     include:
       - master
       - refs/tags/*
-  pr:
-    - master
+pr:
+  - master
 
 
 pool:
