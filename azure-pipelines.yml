@@ -1,19 +1,55 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
 
 trigger:
-- master
+  branches:
+    include:
+    - '*'
 
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+stages:
+- stage: Test
+  jobs:
+  - job: Test
+    pool:
+      vmImage: $(vmImageName)
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm install
+        npm test
+      displayName: 'npm test'
+
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: Build
+    pool:
+      vmImage: $(vmImageName)
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm install --production
+      displayName: 'npm install'
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        replaceExistingArchive: true
+
+    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      artifact: drop
