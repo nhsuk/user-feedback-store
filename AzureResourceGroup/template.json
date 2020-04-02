@@ -15,7 +15,7 @@
     },
     "variables": {
         "locationAbbreviation": "[substring(parameters('location'), 0, 3)]",
-        "storageAccountName": "[concat('nhsukuserfeedback', parameters('environment'), variables('locationAbbreviation'))]",
+        "storageAccountName": "[concat('nhsukfeedback', parameters('environment'), variables('locationAbbreviation'))]",
         "functionAppName": "[concat('nhsuk-user-feedback-func-', parameters('environment'), '-', variables('locationAbbreviation'))]",
         "hostingPlanName": "[concat('nhsuk-user-feedback-plan-', parameters('environment'), '-', variables('locationAbbreviation'))]",
         "appInsightsName": "[variables('functionAppName')]"
