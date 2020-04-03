@@ -20,6 +20,9 @@
         },
         "hostingPlanSkuName": {
             "type": "String"
+        },
+        "disableCORS": {
+            "type": "Bool"
         }
     },
     "variables": {
@@ -78,7 +81,12 @@
                             "name": "MONGO_CONNECTION_STRING",
                             "value": "[listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('databaseName')), '2019-12-12').connectionStrings[0].connectionString]"
                         }
-                    ]
+                    ],
+                    "cors": {
+                        "allowedOrigins": [
+                            "[if(parameters('disableCORS'), '*', 'https://www.nhs.uk')]"
+                        ]
+                    }
                 },
                 "reserved": true
             }
