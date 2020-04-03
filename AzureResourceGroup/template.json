@@ -26,7 +26,8 @@
         "locationAbbreviation": "[substring(parameters('location'), 0, 3)]",
         "storageAccountName": "[concat('nhsukfeedback', parameters('environment'), variables('locationAbbreviation'))]",
         "hostingPlanName": "[concat('nhsuk-user-feedback-plan-', parameters('environment'), '-', variables('locationAbbreviation'))]",
-        "appInsightsName": "[parameters('functionAppName')]"
+        "appInsightsName": "[parameters('functionAppName')]",
+        "databaseName": "[concat('nhsuk-user-feedback-db-', parameters('environment'))]"
     },
     "resources": [
         {
@@ -38,7 +39,8 @@
             "dependsOn": [
                 "[concat('microsoft.insights/components/', variables('appInsightsName'))]",
                 "[concat('Microsoft.Web/serverfarms/', variables('hostingPlanName'))]",
-                "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+                "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+                "[concat('Microsoft.DocumentDB/databaseAccounts/', variables('databaseName'))]"
             ],
             "tags": {
                 "Owner": "Mike Monteith"
@@ -71,6 +73,10 @@
                         {
                             "name": "WEBSITE_CONTENTSHARE",
                             "value": "[toLower(parameters('functionAppName'))]"
+                        },
+                        {
+                            "name": "MONGO_CONNECTION_STRING",
+                            "value": "[listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('databaseName')), '2019-12-12').connectionStrings[0].connectionString]"
                         }
                     ]
                 },
@@ -119,6 +125,27 @@
             "properties": {
                 "Request_Source": "rest",
                 "Application_Type": "web"
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "apiVersion": "2020-03-01",
+            "name": "[variables('databaseName')]",
+            "location": "[parameters('location')]",
+            "tags": {
+                "Owner": "Mike Monteith"
+            },
+            "kind": "MongoDB",
+            "properties": {
+                "locations": [{
+                    "locationName": "[parameters('location')]"
+                }],
+                "databaseAccountOfferType": "Standard",
+                "capabilities": [
+                    {
+                        "name": "EnableMongo"
+                    }
+                ]
             }
         }
     ],
