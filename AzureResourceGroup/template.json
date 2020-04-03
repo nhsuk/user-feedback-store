@@ -14,6 +14,12 @@
         },
         "functionAppName": {
             "type": "String"
+        },
+        "hostingPlanSkuTier": {
+            "type": "String"
+        },
+        "hostingPlanSkuName": {
+            "type": "String"
         }
     },
     "variables": {
@@ -93,8 +99,8 @@
                 "Owner": "Mike Monteith"
             },
             "sku": {
-                "Tier": "Dynamic",
-                "Name": "Y1"
+                "Tier": "[parameters('hostingPlanSkuTier')]",
+                "Name": "[parameters('hostingPlanSkuName')]"
             },
             "kind": "linux",
             "properties": {
