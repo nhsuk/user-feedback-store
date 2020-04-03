@@ -113,5 +113,15 @@
                 "Application_Type": "web"
             }
         }
-    ]
+    ],
+    "outputs": {
+        "functionAppName": {
+            "type": "string",
+            "value": "[variables('functionAppName')]"
+        },
+        "storageAccountName": {
+            "type": "string",
+            "value": "[variables('storageAccountName')]"
+        }
+    }
 }
