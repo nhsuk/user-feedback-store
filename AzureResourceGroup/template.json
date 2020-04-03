@@ -87,7 +87,7 @@
                         },
                         {
                             "name": "MONGO_CONNECTION_STRING",
-                            "value": "[listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('databaseName')), '2019-12-12').connectionStrings[0].connectionString]"
+                            "value": "[concat(listConnectionStrings(resourceId('Microsoft.DocumentDB/databaseAccounts', variables('databaseName')), '2019-12-12').connectionStrings[0].connectionString, '&retrywrites=false&maxIdleTimeMS=120000')]"
                         }
                     ],
                     "cors": {
