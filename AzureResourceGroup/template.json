@@ -11,20 +11,22 @@
         },
         "environment": {
             "type": "String"
+        },
+        "functionAppName": {
+            "type": "String"
         }
     },
     "variables": {
         "locationAbbreviation": "[substring(parameters('location'), 0, 3)]",
         "storageAccountName": "[concat('nhsukfeedback', parameters('environment'), variables('locationAbbreviation'))]",
-        "functionAppName": "[concat('nhsuk-user-feedback-func-', parameters('environment'), '-', variables('locationAbbreviation'))]",
         "hostingPlanName": "[concat('nhsuk-user-feedback-plan-', parameters('environment'), '-', variables('locationAbbreviation'))]",
-        "appInsightsName": "[variables('functionAppName')]"
+        "appInsightsName": "[parameters('functionAppName')]"
     },
     "resources": [
         {
             "type": "Microsoft.Web/sites",
             "apiVersion": "2019-08-01",
-            "name": "[variables('functionAppName')]",
+            "name": "[parameters('functionAppName')]",
             "kind": "functionapp,linux",
             "location": "[parameters('location')]",
             "dependsOn": [
@@ -36,7 +38,7 @@
                 "Owner": "Mike Monteith"
             },
             "properties": {
-                "name": "[variables('functionAppName')]",
+                "name": "[parameters('functionAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
                 "siteConfig": {
                     "appSettings": [
@@ -62,7 +64,7 @@
                         },
                         {
                             "name": "WEBSITE_CONTENTSHARE",
-                            "value": "[toLower(variables('functionAppName'))]"
+                            "value": "[toLower(parameters('functionAppName'))]"
                         }
                     ]
                 },
@@ -117,7 +119,7 @@
     "outputs": {
         "functionAppName": {
             "type": "string",
-            "value": "[variables('functionAppName')]"
+            "value": "[parameters('functionAppName')]"
         },
         "storageAccountName": {
             "type": "string",
