@@ -21,7 +21,7 @@
         "hostingPlanSkuName": {
             "type": "String"
         },
-        "disableCORS": {
+        "enableCORS": {
             "type": "Bool"
         },
         "buildTag": {
@@ -107,7 +107,7 @@
                     ],
                     "cors": {
                         "allowedOrigins": [
-                            "[if(parameters('disableCORS'), '*', 'https://www.nhs.uk')]"
+                            "[if(parameters('enableCORS'), '*', 'https://www.nhs.uk')]"
                         ]
                     }
                 },
