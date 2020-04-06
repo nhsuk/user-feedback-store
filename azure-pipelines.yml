@@ -1,0 +1,56 @@
+
+# Run pipeline on master branch, pull-requests into master, and tags
+trigger:
+  branches:
+    include:
+      - master
+      - refs/tags/*
+pr:
+- master
+
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: Test
+  jobs:
+  - job: Test
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm install
+        npm test
+      displayName: 'npm test'
+
+- stage: Build
+  displayName: Build stage
+  jobs:
+  - job: Build
+
+    steps:
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '10.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm install --production
+      displayName: 'npm install'
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+        replaceExistingArchive: true
+
+    - upload: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      artifact: drop
