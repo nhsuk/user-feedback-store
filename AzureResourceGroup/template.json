@@ -23,6 +23,16 @@
         },
         "disableCORS": {
             "type": "Bool"
+        },
+        "buildTag": {
+            "type": "String"
+        },
+        "expiresTag": {
+            "type": "String",
+            "defaultValue": "Never"
+        },
+        "ownerTag": {
+            "type": "String"
         }
     },
     "variables": {
@@ -30,7 +40,14 @@
         "storageAccountName": "[concat('nhsukfeedback', parameters('environment'), variables('locationAbbreviation'))]",
         "hostingPlanName": "[concat('nhsuk-user-feedback-plan-', parameters('environment'), '-', variables('locationAbbreviation'))]",
         "appInsightsName": "[parameters('functionAppName')]",
-        "databaseName": "[concat('nhsuk-user-feedback-db-', parameters('environment'))]"
+        "databaseName": "[concat('nhsuk-user-feedback-db-', parameters('environment'))]",
+        "tags": {
+            "Owner": "[parameters('ownerTag')]",
+            "Product": "User Feedback",
+            "Build": "[parameters('buildTag')]",
+            "Expires": "[parameters('expiresTag')]",
+            "Environment": "[parameters('environment')]"
+        }
     },
     "resources": [
         {
@@ -45,9 +62,7 @@
                 "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
                 "[concat('Microsoft.DocumentDB/databaseAccounts/', variables('databaseName'))]"
             ],
-            "tags": {
-                "Owner": "Mike Monteith"
-            },
+            "tags": "[variables('tags')]",
             "properties": {
                 "name": "[parameters('functionAppName')]",
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('hostingPlanName'))]",
@@ -104,6 +119,7 @@
             "apiVersion": "2019-06-01",
             "name": "[variables('storageAccountName')]",
             "location": "[parameters('location')]",
+            "tags": "[variables('tags')]",
             "sku": {
                 "name": "Standard_LRS"
             },
@@ -116,10 +132,7 @@
             "apiVersion": "2019-08-01",
             "name": "[variables('hostingPlanName')]",
             "location": "[parameters('location')]",
-            "dependsOn": [],
-            "tags": {
-                "Owner": "Mike Monteith"
-            },
+            "tags": "[variables('tags')]",
             "sku": {
                 "Tier": "[parameters('hostingPlanSkuTier')]",
                 "Name": "[parameters('hostingPlanSkuName')]"
@@ -134,9 +147,7 @@
             "apiVersion": "2015-05-01",
             "name": "[variables('appInsightsName')]",
             "location": "[parameters('location')]",
-            "tags": {
-                "Owner": "Mike Monteith"
-            },
+            "tags": "[variables('tags')]",
             "kind": "web",
             "properties": {
                 "Request_Source": "rest",
@@ -148,9 +159,7 @@
             "apiVersion": "2020-03-01",
             "name": "[variables('databaseName')]",
             "location": "[parameters('location')]",
-            "tags": {
-                "Owner": "Mike Monteith"
-            },
+            "tags": "[variables('tags')]",
             "kind": "MongoDB",
             "properties": {
                 "locations": [{
