@@ -4,17 +4,17 @@ Backend for saving data posted from the user-feedback-form frontend.
 
 ## Getting started
 
-1. Start a local [mongo database](https://docs.mongodb.com/manual/installation/#mongodb-community-edition-installation-tutorials)
+1. Install dependencies `npm install`.
 
-2. Install [azure core tools](https://docs.microsoft.com/en-us/azure/azure-functions/functions-run-local?tabs=macos%2Ccsharp%2Cbash#v2)
+2. Copy `local.settings.example.json` to `local.settings.json`.
 
-3. Install dependencies `npm install`.
+3. Run the app `npm start`.
 
-4. Copy `local.settings.example.json` to `local.settings.json`.
+This will start the app with an in-memory mongo database at `mongodb://127.0.0.1:51412/userfeedback`.
+While the app is running, you can connect to the mongo database to see what data is being stored using a [mongo client](https://docs.mongodb.com/manual/mongo/).
+When the app stops, the data will be lost.
 
-5. Run function `func start`.
-
-The default mongo connection string is `http://localhost` which can be changed by editing the `local.settings.json` file.
+If you would like to connect to your own local database, to allow for longer-term storage, edit the `MONGO_CONNECTION_STRING` variable in `local.settings.json` and run `npx func start` instead of `npm start`.
 
 ## API
 
