@@ -6,15 +6,19 @@ Backend for saving data posted from the user-feedback-form frontend.
 
 1. Install dependencies `npm install`.
 
-2. Copy `local.settings.example.json` to `local.settings.json`.
+2. Run the app `npm start`.
 
-3. Run the app `npm start`.
+### Mongo dev connection
 
 This will start the app with an in-memory mongo database at `mongodb://127.0.0.1:51412/userfeedback`.
 While the app is running, you can connect to the mongo database to see what data is being stored using a [mongo client](https://docs.mongodb.com/manual/mongo/).
 When the app stops, the data will be lost.
 
-If you would like to connect to your own local database, to allow for longer-term storage, edit the `MONGO_CONNECTION_STRING` variable in `local.settings.json` and run `npx func start` instead of `npm start`.
+If you would like to connect to your own mongo database, to allow for longer-term storage:
+
+1. Copy the `local.settings.example.json` file to `local.settings.json`.
+2. Edit the `MONGO_CONNECTION_STRING` value in `local.settings.json`.
+3. Run `npx func start` instead of `npm start` to start the app.
 
 ## API
 
