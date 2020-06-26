@@ -1,5 +1,6 @@
 {
   "name": "user-feedback-store",
+  "main": "bin/index.js",
   "version": "0.0.2",
   "description": "",
   "scripts": {
@@ -25,6 +26,7 @@
   },
   "dependencies": {
     "mongodb": "^3.6.8",
-    "uuidv4": "^6.2.8"
+    "uuidv4": "^6.2.8",
+    "yargs": "^15.3.1"
   }
 }

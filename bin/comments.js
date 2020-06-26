@@ -11,7 +11,7 @@ const arrayToCSVRow = (array) => {
   return `${values}\n`;
 };
 
-(async () => {
+module.exports = async () => {
   const data = await getAllComments();
 
   const cleanData = data.map((row) => ({
@@ -43,4 +43,4 @@ const arrayToCSVRow = (array) => {
     const values = columns.map((column) => row[column.key]);
     process.stdout.write(arrayToCSVRow(values));
   });
-})();
+};
