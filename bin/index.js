@@ -7,7 +7,15 @@ const setEnvVars = (args) => {
   process.env.MONGO_CONNECTION_STRING = args['connection-string'];
 };
 
-yargs
+const getSinceOption = (returnedDataType) => yargs.option('since', {
+  alias: 's',
+  demandOption: true,
+  describe: `Earliest datetime to retrieve ${returnedDataType} from, in seconds since Epoch time.`,
+  requiresArg: true,
+  type: 'number',
+});
+
+const cli = yargs
   .env()
   .option('connection-string', {
     alias: 'c',
@@ -19,22 +27,33 @@ yargs
   .command(
     'comments',
     'Get a CSV of user comments',
-    () => {},
+    () => getSinceOption('comments'),
     (args) => {
       setEnvVars(args);
-      getComments();
+      // The `since` option is in seconds, but Date requires milliseconds so multiply by 1000.
+      const dateSince = new Date(args.since * 1000);
+      getComments(dateSince);
     }
   )
   .command(
     'averages',
     'Get a CSV of average satisfaction scores',
-    () => {},
+    () => getSinceOption('averages'),
     (args) => {
       setEnvVars(args);
-      getAverages();
+      // The `since` option is in seconds, but Date requires milliseconds so multiply by 1000.
+      const dateSince = new Date(args.since * 1000);
+      getAverages(dateSince);
     }
   )
   .demandCommand(1, 'You need at least one command')
   .strictCommands()
-  .help()
-  .parse();
+  .help();
+
+if (require.main === module) {
+  // If this module is executed directly, run the yargs CLI.
+  cli.parse();
+} else {
+  // Otherwise, this module has been require()'d, so return the yargs object.
+  module.exports = cli;
+}
