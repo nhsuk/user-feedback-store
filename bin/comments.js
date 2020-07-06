@@ -11,8 +11,8 @@ const arrayToCSVRow = (array) => {
   return `${values}\n`;
 };
 
-module.exports = async () => {
-  const data = await getAllComments();
+module.exports = async (dateSince) => {
+  const data = await getAllComments(dateSince);
 
   const cleanData = data.map((row) => ({
     ...row,
@@ -22,7 +22,7 @@ module.exports = async () => {
   // Turn comments into CSV
   const columns = [{
     key: 'timestamp',
-    label: 'datetime',
+    label: 'Datetime',
   }, {
     key: 'url',
     label: 'URL',
