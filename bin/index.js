@@ -28,22 +28,22 @@ const cli = yargs
     'comments',
     'Get a CSV of user comments',
     () => getSinceOption('comments'),
-    (args) => {
+    async (args) => {
       setEnvVars(args);
       // The `since` option is in seconds, but Date requires milliseconds so multiply by 1000.
       const dateSince = new Date(args.since * 1000);
-      getComments(dateSince);
+      await getComments(dateSince);
     }
   )
   .command(
     'averages',
     'Get a CSV of average satisfaction scores',
     () => getSinceOption('averages'),
-    (args) => {
+    async (args) => {
       setEnvVars(args);
       // The `since` option is in seconds, but Date requires milliseconds so multiply by 1000.
       const dateSince = new Date(args.since * 1000);
-      getAverages(dateSince);
+      await getAverages(dateSince);
     }
   )
   .demandCommand(1, 'You need at least one command')
