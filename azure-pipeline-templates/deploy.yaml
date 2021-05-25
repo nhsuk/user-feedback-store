@@ -1,0 +1,31 @@
+steps:
+
+# Since this is a deployment stage, we need to checkout the code. Non-deployment stages do this by default
+- checkout: self
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'nhsuk-user-feedback-${{parameters.environment}}'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    addSpnToEnvironment: true # adds $servicePrincipalId, $servicePrincipalKey and $tenantId to the env vars
+    inlineScript: |
+        set -e
+        # Set variables that terraform uses for azure authentication.
+        # Make these variables available to future jobs.
+        echo "##vso[task.setvariable variable=ARM_SUBSCRIPTION_ID]$(az account show --query 'id' --output tsv)"
+        echo "##vso[task.setvariable variable=ARM_TENANT_ID]$tenantId"
+        echo "##vso[task.setvariable variable=ARM_CLIENT_ID]$servicePrincipalId"
+        echo "##vso[task.setvariable variable=ARM_CLIENT_SECRET]$servicePrincipalKey"
+  displayName: 'Get Azure auth variables'
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'nhsuk-user-feedback-${{parameters.environment}}'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      ./scripts/deploy.sh \
+        --env=${{parameters.environment}} \
+        --region=${{parameters.region}}
+  displayName: 'Run deploy script'
