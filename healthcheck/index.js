@@ -1,3 +1,3 @@
-const { handleRequest, requestTypes } = require('../lib/index.js');
+const { handleHealthcheck } = require('../lib/index.js');
 
-module.exports = async (context, req) => handleRequest(context, req, requestTypes.HEALTHCHECK);
+module.exports = async (context, req) => handleHealthcheck(context, req);
