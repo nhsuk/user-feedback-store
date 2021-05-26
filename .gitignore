@@ -1,4 +1,5 @@
 local.settings.json
 node_modules/
+globalConfig.json
 terraform/.terraform*
 dist/
