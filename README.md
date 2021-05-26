@@ -75,6 +75,14 @@ Free-text user comments.
 }
 ```
 
+### Healthcheck
+
+Test the health of the function. Useful for monitoring.
+
+Returns a 503 response if database is unreachable. 200 OK otherwise.
+
+`GET /healthcheck/`
+
 ## Contributing
 
 ### Tests
