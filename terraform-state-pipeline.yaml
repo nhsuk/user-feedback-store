@@ -1,0 +1,27 @@
+# Only allow this pipeline to be run manually
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+parameters:
+- name: env
+  displayName: Environment (dev, stag, prod, etc.)
+  type: string
+- name: region
+  displayName: Region (uks, ukw, etc.)
+  type: string
+
+steps:
+
+- task: AzureCLI@2
+  inputs:
+    azureSubscription: 'nhsuk-user-feedback-${{ parameters.env }}'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      ./scripts/create_terraform_state.sh \
+        --env=${{ parameters.env }} \
+        --region=${{ parameters.region }}
+  displayName: 'Create terraform state resources'
+
