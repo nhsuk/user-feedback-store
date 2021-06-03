@@ -150,10 +150,10 @@ describe('CLI "averages" command', () => {
     const column = output.map((row) => row[0]);
     expect(column).toEqual([
       'URL',
-      'https://example.com/4',
-      'https://example.com/3',
-      'https://example.com/2',
       'https://example.com/1',
+      'https://example.com/2',
+      'https://example.com/3',
+      'https://example.com/4',
     ]);
   });
 
@@ -161,10 +161,10 @@ describe('CLI "averages" command', () => {
     const column = output.map((row) => row[1]);
     expect(column).toEqual([
       'satisfied',
-      '3',
       '1',
       '0',
       '1',
+      '3',
     ]);
   });
 
@@ -172,10 +172,10 @@ describe('CLI "averages" command', () => {
     const column = output.map((row) => row[2]);
     expect(column).toEqual([
       'unsatisfied',
-      '1',
       '0',
       '1',
       '0',
+      '1',
     ]);
   });
 });
