@@ -1,0 +1,6 @@
+# Changelog
+
+## 0.1.0
+
+* Added a healthcheck function
+* Replace ARM templates with terraform
