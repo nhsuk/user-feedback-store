@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+* Performance improvements around database connections
+
 ## 0.1.1
 
 * Fix deployment. Staging and Production terraform vars missing
