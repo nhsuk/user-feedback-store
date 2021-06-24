@@ -1,4 +1,4 @@
-const { getAllComments } = require('../lib/database.js');
+const { getAllComments, closeConnection } = require('../lib/database.js');
 
 const arrayToCSVRow = (array) => {
   const values = array
@@ -43,4 +43,6 @@ module.exports = async (dateSince) => {
     const values = columns.map((column) => row[column.key]);
     process.stdout.write(arrayToCSVRow(values));
   });
+
+  await closeConnection();
 };

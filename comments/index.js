@@ -1,3 +1,3 @@
-const { handleRequest, requestTypes } = require('../lib/index.js');
+const { handleComments } = require('../lib/index.js');
 
-module.exports = (context, req) => handleRequest(context, req, requestTypes.COMMENTS);
+module.exports = (context, req) => handleComments(context, req);

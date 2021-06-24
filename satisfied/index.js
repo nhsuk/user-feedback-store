@@ -1,3 +1,3 @@
-const { handleRequest, requestTypes } = require('../lib/index.js');
+const { handleSatisfied } = require('../lib/index.js');
 
-module.exports = async (context, req) => handleRequest(context, req, requestTypes.SATISFIED);
+module.exports = async (context, req) => handleSatisfied(context, req);

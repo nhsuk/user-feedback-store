@@ -1,7 +1,7 @@
 {
   "name": "user-feedback-store",
   "main": "bin/index.js",
-  "version": "0.0.2",
+  "version": "0.1.2",
   "description": "",
   "scripts": {
     "lint": "eslint .",

@@ -1,4 +1,4 @@
-const { getSatisfactionPerURL } = require('../lib/database.js');
+const { getSatisfactionPerURL, closeConnection } = require('../lib/database.js');
 
 module.exports = async (dateSince) => {
   const averages = await getSatisfactionPerURL(dateSince);
@@ -7,4 +7,6 @@ module.exports = async (dateSince) => {
     // eslint-disable-next-line no-underscore-dangle
     process.stdout.write(`"${row._id}",${row.satisfied},${row.unsatisfied}\n`);
   });
+
+  await closeConnection();
 };
