@@ -83,6 +83,34 @@ Returns a 503 response if database is unreachable. 200 OK otherwise.
 
 `GET /healthcheck/`
 
+
+## CLI
+
+The command line interface can be used for running data-export commands.
+
+From inside the project's root directory, run `node .` for the CLI entrypoint.
+
+All commands make queries on your mongo database. Pass your database connection string with the `--connection-string`
+or `-c` flag.
+
+### Comments
+
+Export a comma-separated values output of comments to stdout.
+
+For example,
+```sh
+node . comments -c mongodb://localhost > comments-file.csv
+```
+
+### Averages
+
+Export a comma-separated values output of average satisfaction scores to stdout.
+
+For example,
+```sh
+node . averages -c mongodb://localhost > averages-file.csv
+```
+
 ## Contributing
 
 ### Tests
