@@ -83,6 +83,18 @@ Returns a 503 response if database is unreachable. 200 OK otherwise.
 
 `GET /healthcheck/`
 
+### Setup
+
+Run database setup commands such as creating indexes.
+This endpoint is protected by authentication.
+Your deployment mechanism should call this endpoint after each deployment.
+
+`POST /setup/`
+
+#### Payload
+
+none
+
 ## Contributing
 
 ### Tests
