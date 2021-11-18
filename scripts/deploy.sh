@@ -58,3 +58,12 @@ az functionapp deployment source config-zip \
   -n $FUNCTION_APP_NAME \
   --src $ZIP_FILE_PATH \
   --build-remote true
+
+# Trigger the setup function. The setup function contains code which should be run once per deployment
+
+# Get setup function URL and key
+SETUP_FUNCTION_URL=$(az functionapp function show --resource-group $RESOURCE_GROUP --name $FUNCTION_APP_NAME --function-name setup --query "invokeUrlTemplate" --output tsv)
+SETUP_FUNCTION_KEY=$(az functionapp function keys list --resource-group $RESOURCE_GROUP --name $FUNCTION_APP_NAME --function-name setup --query "default" --output tsv)
+
+# Empty POST request to the setup function, with an auth header.
+curl -v --header "x-functions-key: $SETUP_FUNCTION_KEY" -d "" $SETUP_FUNCTION_URL

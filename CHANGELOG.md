@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.0
+
+* Performance improvements - use insert instead of update update when we know we can.
+* Add database indexes via a new private function
+
 ## 0.1.2
 
 * Performance improvements around database connections
