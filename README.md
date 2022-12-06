@@ -1,6 +1,6 @@
 # User Feedback Form Backend
 
-Backend for saving data posted from the user-feedback-form frontend.
+This application is used to store user feedback information, posted to it from the user-feedback-form frontend. The posted data is stored in a Mongo database. The user-feedback-form can be found [here](https://github.com/nhsuk/user-feedback-form)
 
 ## Getting started
 
@@ -94,6 +94,13 @@ Your deployment mechanism should call this endpoint after each deployment.
 #### Payload
 
 none
+
+## Dependencies
+
+### Mongo DB
+
+The requied Mongo DB is created as part of the Terraform process for this product. 
+
 
 ## CLI
 
