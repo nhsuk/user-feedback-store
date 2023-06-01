@@ -17,17 +17,37 @@ stages:
 - stage: Test
   jobs:
   - job: Test
-
     steps:
     - task: NodeTool@0
+      displayName: 'Install Node.js'
       inputs:
         versionSpec: '10.x'
-      displayName: 'Install Node.js'
 
-    - script: |
-        npm ci
-        npm test
-      displayName: 'npm test'
+    - script: npm ci
+      displayName: 'Install'
+
+    - task: SonarQubePrepare@5
+      displayName: 'Prepare analysis on SonarQube'
+      inputs:
+        SonarQube: 'sonarqube-connection'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectName: 'User Feedback Store'
+        cliProjectKey: 'UserFeedbackStore'
+        extraProperties: |
+          sonar.javascript.lcov.reportPaths=coverage/lcov.info
+          sonar.coverage.exclusions=**/*.config.js,**/coverage/**
+
+    - script: npm run test
+      displayName: 'Test'
+
+    - task: SonarQubeAnalyze@5
+      displayName: 'Run code analysis' 
+
+    - task: SonarQubePublish@5
+      displayName: 'Publish quality gate result'
+      inputs:
+        pollingTimeoutSec: '300'
 
 - stage: DevDeployment
   displayName: 'Dev Deployment'
