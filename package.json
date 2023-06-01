@@ -9,7 +9,7 @@
     "start:mongo": "node ./tests/integration/mongo-dev-server.js",
     "start:function": "MONGO_CONNECTION_STRING=\"mongodb://127.0.0.1:51412/userfeedback?\" func start -p 7071",
     "test": "npm-run-all test:*",
-    "test:unit": "jest --projects tests/unit",
+    "test:unit": "jest --coverage --projects tests/unit",
     "test:integration": "start-server-and-test 'npm start' 7071 'jest --projects tests/integration'"
   },
   "author": "",

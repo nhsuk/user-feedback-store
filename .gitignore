@@ -3,3 +3,4 @@ node_modules/
 globalConfig.json
 terraform/.terraform*
 dist/
+coverage/
