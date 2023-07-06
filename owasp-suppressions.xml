@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+	<!-- Ignored Vulnerabilities -->
+	<suppress>
+		<notes><![CDATA[
+   file name: Microsoft.Win32.Registry.AccessControl.dll
+   ]]></notes>
+		<sha1>1f3e0603e5cbcb72c7b00095df6183175d874b5d</sha1>
+		<cpe>cpe:/a:microsoft:access</cpe>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: Microsoft.Win32.SystemEvents.dll
+   ]]></notes>
+		<sha1>8457ee4056458c56b1f6c3b39d74bf4e4a658e50</sha1>
+		<cpe>cpe:/a:events_project:events</cpe>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: Microsoft.Win32.SystemEvents.dll
+   ]]></notes>
+		<sha1>21606634f2b28100fbc174bec7afc0adb88d53a8</sha1>
+		<cpe>cpe:/a:events_project:events</cpe>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: Microsoft.Win32.SystemEvents.dll
+   ]]></notes>
+		<sha1>d656ce9554299eac8183740852ad4950abef1b75</sha1>
+		<cpe>cpe:/a:events_project:events</cpe>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: NuGet.Configuration.dll
+   ]]></notes>
+		<packageUrl regex="true">^pkg:generic/NuGet\.Configuration@.*$</packageUrl>
+		<cpe>cpe:/a:microsoft:nuget</cpe>
+	</suppress>
+
+
+<suppress>
+   <notes><![CDATA[
+   file name: ansi-regex:5.0.0
+   ]]></notes>
+   <packageUrl regex="true">^pkg:npm/ansi\-regex@.*$</packageUrl>
+   <vulnerabilityName>CVE-2021-3807</vulnerabilityName>
+</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: grpc-core-1.20.0.jar
+   ]]></notes>
+		<packageUrl regex="true">^pkg:maven/io\.grpc/grpc\-core@.*$</packageUrl>
+		<cpe>cpe:/a:grpc:grpc</cpe>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: netty-common-4.1.34.Final.jar
+   ]]></notes>
+		<packageUrl regex="true">^pkg:maven/io\.netty/netty\-common@.*$</packageUrl>
+		<vulnerabilityName>CVE-2021-21290</vulnerabilityName>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: ansi-regex:5.0.0
+   ]]></notes>
+		<packageUrl regex="true">^pkg:npm/ansi\-regex@.*$</packageUrl>
+		<cpe>cpe:/a:ansi-regex_project:ansi-regex</cpe>
+	</suppress>
+
+	<suppress>
+		<notes><![CDATA[
+   file name: netty-common-4.1.34.Final.jar
+   ]]></notes>
+		<packageUrl regex="true">^pkg:maven/io\.netty/netty\-common@.*$</packageUrl>
+		<cpe>cpe:/a:netty:netty</cpe>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: axios.js
+   ]]></notes>
+		<packageUrl regex="true">^pkg:javascript/axios@.*$</packageUrl>
+		<cve>CVE-2021-3749</cve>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: axios.min.js
+   ]]></notes>
+		<packageUrl regex="true">^pkg:javascript/axios@.*$</packageUrl>
+		<cve>CVE-2021-3749</cve>
+	</suppress>
+</suppressions>

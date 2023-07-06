@@ -25,10 +25,11 @@ jobs:
           format: 'HTML'
           out: 'reports'
           args: >
-            --failOnCVSS 7 
             --nodePackageSkipDevDependencies
             --nodeAuditSkipDevDependencies
+            --failOnCVSS 7
       - name: Upload Test results
+        if: always()
         uses: actions/upload-artifact@master
         with:
            name: Depcheck report
