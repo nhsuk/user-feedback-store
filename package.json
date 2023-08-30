@@ -26,7 +26,7 @@
     "start-server-and-test": "^1.12.3"
   },
   "dependencies": {
-    "mongodb": "^3.6.8",
+    "mongodb": "^3.6.10",
     "uuidv4": "^6.2.8",
     "yargs": "^15.3.1"
   }
