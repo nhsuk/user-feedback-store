@@ -33,10 +33,14 @@ stages:
         scannerMode: 'CLI'
         configMode: 'manual'
         cliProjectName: 'User Feedback Store'
-        cliProjectKey: 'UserFeedbackStore'
+        cliProjectKey: 'nhsuk-user-feedback-store'
         extraProperties: |
+          sonar.exclusions=$(System.DefaultWorkingDirectory)/dependency-scan-results/**
           sonar.javascript.lcov.reportPaths=coverage/lcov.info
           sonar.coverage.exclusions=**/*.config.js,**/coverage/**
+          sonar.exclusions=node_modules/**
+          sonar.dependencyCheck.htmlReportPath=$(System.DefaultWorkingDirectory)/dependency-scan-results/dependency-check-report.html
+          sonar.language=js
 
     - script: npm run test
       displayName: 'Test'
