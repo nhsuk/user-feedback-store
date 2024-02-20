@@ -35,6 +35,7 @@ stages:
         projectKey: 'nhsuk-user-feedback-store'
         projectName: 'User Feedback Store'
         extraProperties: |
+          sonar.projectKey=nhsuk-user-feedback-store
           sonar.exclusions=$(System.DefaultWorkingDirectory)/dependency-scan-results/**
           sonar.javascript.lcov.reportPaths=coverage/lcov.info
           sonar.coverage.exclusions=**/*.config.js,**/coverage/**
