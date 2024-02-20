@@ -28,6 +28,7 @@
   "dependencies": {
     "browserslist": "^4.23.0",
     "caniuse-lite": "^1.0.30001588",
+    "debug": "^4.3.4",
     "mongodb": "^3.6.8",
     "uuidv4": "^6.2.8",
     "yargs": "^15.3.1"
