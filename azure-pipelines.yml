@@ -21,7 +21,7 @@ stages:
     - task: NodeTool@0
       displayName: 'Install Node.js'
       inputs:
-        versionSpec: '10.x'
+        versionSpec: '20.x'
 
     - script: npm ci
       displayName: 'Install'
