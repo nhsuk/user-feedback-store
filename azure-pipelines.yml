@@ -1,13 +1,13 @@
 
-# Run pipeline on master branch, pull-requests into master, and tags
+# Run pipeline on main branch, pull-requests into main, and tags
 trigger:
   branches:
     include:
-    - master
+    - main
     - refs/tags/*
 
 pr:
-- master
+- main
 
 pool:
   vmImage: ubuntu-latest
@@ -51,7 +51,7 @@ stages:
 
 - stage: DevDeployment
   displayName: 'Dev Deployment'
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'))
   dependsOn:
   - Test
   jobs:
