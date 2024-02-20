@@ -1,17 +1,13 @@
 /* global expect beforeAll afterAll */
 
 const axios = require('axios');
-const MongoClient = require('mongodb');
+const { MongoClient } = require('mongodb');
 
 let connection;
 let db;
 
 beforeAll(async () => {
-  connection = await MongoClient.connect(
-    global.__MONGO_CONNECTION_STRING__, // eslint-disable-line no-underscore-dangle
-    {
-      useNewUrlParser: true,
-    }
+  connection = await MongoClient.connect(global.__MONGO_CONNECTION_STRING__, // eslint-disable-line no-underscore-dangle
   );
   db = connection.db('userfeedback');
 });

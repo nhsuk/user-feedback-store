@@ -1,7 +1,7 @@
 /* global expect beforeAll afterAll */
 /* eslint-disable no-underscore-dangle */
 
-const MongoClient = require('mongodb');
+const { MongoClient } = require('mongodb');
 const csvParse = require('csv-parse');
 
 const cli = require('../../bin/index.js');
@@ -13,12 +13,7 @@ let db;
 const DATETIME_REGEX = /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}Z/;
 
 beforeAll(async () => {
-  connection = await MongoClient.connect(
-    global.__MONGO_CONNECTION_STRING__,
-    {
-      useNewUrlParser: true,
-    }
-  );
+  connection = await MongoClient.connect(global.__MONGO_CONNECTION_STRING__);
   db = connection.db('userfeedback');
   await db.collection('feedback').deleteMany({});
   await db.collection('feedback').insertMany([{
