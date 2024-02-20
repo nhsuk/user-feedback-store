@@ -3,7 +3,7 @@
   "main": "bin/index.js",
   "version": "0.2.0",
   "author": "",
-  "description": "Backend API for use with the user-feedback-form frontend",  
+  "description": "Backend API for use with the user-feedback-form frontend",
   "scripts": {
     "lint": "eslint .",
     "start": "npm-run-all -p start:*",
@@ -30,6 +30,7 @@
     "caniuse-lite": "^1.0.30001588",
     "debug": "^4.3.4",
     "mongodb": "^6.3.0",
+    "uuid": "^9.0.1",
     "uuidv4": "^6.2.13",
     "yargs": "^15.3.1"
   }

@@ -1,12 +1,12 @@
 /* global expect jest */
 
-const averages = require('./averages.js');
+const averages = require('./averages');
 
-jest.mock('../lib/database.js');
+jest.mock('../lib/database');
 
-const { getSatisfactionPerURL } = require('../lib/database.js');
+const { getSatisfactionPerURL } = require('../lib/database');
 
-const { mockStdout } = require('../tests/mocks.js');
+const { mockStdout } = require('../tests/mocks');
 
 describe('Print a CSV of average satisfaction scores', () => {
   let stdout;

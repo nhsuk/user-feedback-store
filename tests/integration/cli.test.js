@@ -4,8 +4,8 @@
 const { MongoClient } = require('mongodb');
 const csvParse = require('csv-parse');
 
-const cli = require('../../bin/index.js');
-const { mockStdout } = require('../mocks.js');
+const cli = require('../../bin/index');
+const { mockStdout } = require('../mocks');
 
 let connection;
 let db;

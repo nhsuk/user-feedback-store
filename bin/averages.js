@@ -1,4 +1,4 @@
-const { getSatisfactionPerURL, closeConnection } = require('../lib/database.js');
+const { getSatisfactionPerURL, closeConnection } = require('../lib/database');
 
 module.exports = async (dateSince) => {
   const averages = await getSatisfactionPerURL(dateSince);

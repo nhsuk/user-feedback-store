@@ -7,7 +7,8 @@ let connection;
 let db;
 
 beforeAll(async () => {
-  connection = await MongoClient.connect(global.__MONGO_CONNECTION_STRING__, // eslint-disable-line no-underscore-dangle
+  connection = await MongoClient.connect(
+    global.__MONGO_CONNECTION_STRING__ // eslint-disable-line no-underscore-dangle
   );
   db = connection.db('userfeedback');
 });
@@ -28,7 +29,10 @@ describe('API endpoint /satisfied/', () => {
       isSatisfied: true,
       url: 'https://example.com/my-test-page/',
     };
-    const response = await axios.post('http://localhost:7071/satisfied/', payload);
+    const response = await axios.post(
+      'http://localhost:7071/satisfied/',
+      payload
+    );
     expect(response.status).toEqual(200);
     expect(response.data).toEqual(
       expect.objectContaining({
@@ -62,7 +66,10 @@ describe('API endpoint /comments/', () => {
       isSatisfied: true,
       url: 'https://example.com/my-test-page/',
     };
-    const response = await axios.post('http://localhost:7071/satisfied/', payload);
+    const response = await axios.post(
+      'http://localhost:7071/satisfied/',
+      payload
+    );
     return response.data.token;
   };
 
@@ -71,7 +78,10 @@ describe('API endpoint /comments/', () => {
       comments: 'Could do with a bit more cowbell.',
       token: await getToken(),
     };
-    const response = await axios.post('http://localhost:7071/comments/', payload);
+    const response = await axios.post(
+      'http://localhost:7071/comments/',
+      payload
+    );
     expect(response.status).toEqual(200);
     expect(response.data).toEqual(
       expect.objectContaining({
@@ -105,7 +115,10 @@ describe('API endpoint /comments/', () => {
       isSatisfied: false,
       url: 'https://example.com/my-test-page/',
     };
-    const response = await axios.post('http://localhost:7071/satisfied/', satisfiedPayload);
+    const response = await axios.post(
+      'http://localhost:7071/satisfied/',
+      satisfiedPayload
+    );
 
     const payload = {
       comments: 'Could do with a bit more cowbell.',
@@ -129,7 +142,10 @@ describe('API endpoint /comments/', () => {
       isSatisfied: false,
       url: 'https://example.com/my-test-page/',
     };
-    const response = await axios.post('http://localhost:7071/satisfied/', satisfiedPayload);
+    const response = await axios.post(
+      'http://localhost:7071/satisfied/',
+      satisfiedPayload
+    );
 
     const payload = {
       comments: 'Could do with a bit more cowbell.',
