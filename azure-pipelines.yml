@@ -62,7 +62,7 @@ stages:
 
 - stage: DevDeployment
   displayName: 'Dev Deployment'
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'))
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/upgrade-terraform'))
   dependsOn:
   - Test
   jobs:
