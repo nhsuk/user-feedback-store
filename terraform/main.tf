@@ -93,7 +93,7 @@ resource "azurerm_function_app" "function_app" {
   tags                       = local.common_tags
 
   os_type = "linux"
-  version = "~3"
+  version = "~4"
 
   site_config {
     cors {
@@ -105,7 +105,7 @@ resource "azurerm_function_app" "function_app" {
     FUNCTIONS_WORKER_RUNTIME = "node"
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.application_insights.instrumentation_key
     APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.application_insights.connection_string
-    WEBSITE_NODE_DEFAULT_VERSION: "~12"
+    WEBSITE_NODE_DEFAULT_VERSION: "~20"
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: azurerm_storage_account.storage_account.primary_connection_string
     WEBSITE_CONTENTSHARE: "nhsuk-user-feedback-func-${var.env}-${local.region_short}"
     MONGO_CONNECTION_STRING: "${azurerm_cosmosdb_account.db.connection_strings.0}&retrywrites=false&maxIdleTimeMS=120000"
