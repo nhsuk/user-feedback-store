@@ -1,4 +1,4 @@
-const { getAllComments, closeConnection } = require('../lib/database.js');
+const { getAllComments, closeConnection } = require('../lib/database');
 
 const arrayToCSVRow = (array) => {
   const values = array

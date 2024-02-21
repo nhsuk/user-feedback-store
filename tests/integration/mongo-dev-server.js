@@ -9,17 +9,20 @@ const mongod = new MongoMemoryServer({
   },
 });
 
-// Make sure that the correct port could be used and we haven't fallen-back to a random port number.
-mongod.getPort().then((port) => {
-  if (port !== PORT) {
-    mongod.stop();
-    // eslint-disable-next-line no-console
-    console.error(`Error: port ${PORT} is not available. Do you already have this server running?`);
+(async () => {
+  try {
+    await mongod.start();
+    const uri = await mongod.getUri();
+    const actualPort = new URL(uri).port;
+
+    if (actualPort !== PORT) {
+      console.error(`Error: Desired port ${PORT} is not available. Using port ${actualPort} instead.`);
+    } else {
+      console.info(`MongoDB Memory Server running at ${uri}`);
+    }
+  } catch (error) {
+    console.error('Failed to start MongoDB Memory Server:', error);
+    await mongod.stop();
     process.exit(1);
   }
-
-  mongod.getUri().then((uri) => {
-    // eslint-disable-next-line no-console
-    console.info(`mongodb memory server available at ${uri}`);
-  });
-});
+})();

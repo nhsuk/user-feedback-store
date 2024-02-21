@@ -1,6 +1,6 @@
-const { handleHealthcheck } = require('../lib/index.js');
+const { handleHealthcheck } = require('../lib/index');
 
-const { createIndexes } = require('../lib/database.js');
+const { createIndexes } = require('../lib/database');
 
 module.exports = async (context, req) => {
   await createIndexes();

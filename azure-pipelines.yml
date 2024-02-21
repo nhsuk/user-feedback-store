@@ -1,13 +1,13 @@
 
-# Run pipeline on master branch, pull-requests into master, and tags
+# Run pipeline on main branch, pull-requests into main, and tags
 trigger:
   branches:
     include:
-    - master
+    - main
     - refs/tags/*
 
 pr:
-- master
+- main
 
 pool:
   vmImage: ubuntu-latest
@@ -21,37 +21,48 @@ stages:
     - task: NodeTool@0
       displayName: 'Install Node.js'
       inputs:
-        versionSpec: '10.x'
+        versionSpec: '20.x'
 
     - script: npm ci
       displayName: 'Install'
 
-    - task: SonarQubePrepare@5
-      displayName: 'Prepare analysis on SonarQube'
+    - task: SonarCloudPrepare@1
+      displayName: 'Prepare analysis on SonarCloud'
       inputs:
-        SonarQube: 'sonarqube-connection'
+        SonarCloud: 'SonarCloud'
+        organization: 'nhsdigital'
         scannerMode: 'CLI'
-        configMode: 'manual'
-        cliProjectName: 'User Feedback Store'
-        cliProjectKey: 'UserFeedbackStore'
+        projectKey: 'nhsuk-user-feedback-store'
+        projectName: 'User Feedback Store'
         extraProperties: |
+          sonar.projectKey=nhsuk-user-feedback-store
+          sonar.exclusions=$(System.DefaultWorkingDirectory)/dependency-scan-results/**
           sonar.javascript.lcov.reportPaths=coverage/lcov.info
           sonar.coverage.exclusions=**/*.config.js,**/coverage/**
+          sonar.exclusions=node_modules/**
+          sonar.dependencyCheck.htmlReportPath=$(System.DefaultWorkingDirectory)/dependency-scan-results/dependency-check-report.html
+          sonar.language=js
 
     - script: npm run test
       displayName: 'Test'
 
-    - task: SonarQubeAnalyze@5
-      displayName: 'Run code analysis' 
+    - task: SonarCloudAnalyze@1
+      displayName: 'Run SonarCloud Code Analysis'
 
-    - task: SonarQubePublish@5
-      displayName: 'Publish quality gate result'
+    - task: SonarCloudPublish@1
+      displayName: 'Publish Quality Gate Result'
       inputs:
         pollingTimeoutSec: '300'
 
+    - task: sonarcloud-buildbreaker@2
+      displayName: "Break the build if the quality gate fails"
+      inputs:
+        SonarCloud: 'SonarCloud'
+        organization: 'nhsdigital'
+
 - stage: DevDeployment
   displayName: 'Dev Deployment'
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/heads/main'))
   dependsOn:
   - Test
   jobs:

@@ -1,7 +1,7 @@
 const yargs = require('yargs');
 
-const getComments = require('./comments.js');
-const getAverages = require('./averages.js');
+const getComments = require('./comments');
+const getAverages = require('./averages');
 
 const setEnvVars = (args) => {
   process.env.MONGO_CONNECTION_STRING = args['connection-string'];

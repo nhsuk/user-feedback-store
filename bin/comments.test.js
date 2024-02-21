@@ -1,12 +1,12 @@
 /* global expect jest */
 
-const comments = require('./comments.js');
+const comments = require('./comments');
 
-jest.mock('../lib/database.js');
+jest.mock('../lib/database');
 
-const { getAllComments } = require('../lib/database.js');
+const { getAllComments } = require('../lib/database');
 
-const { mockStdout } = require('../tests/mocks.js');
+const { mockStdout } = require('../tests/mocks');
 
 describe('Print a CSV of comments', () => {
   let stdout;

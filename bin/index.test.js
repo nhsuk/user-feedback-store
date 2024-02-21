@@ -1,12 +1,12 @@
 /* global expect jest */
 
-const cli = require('./index.js');
+const cli = require('./index');
 
 jest.mock('./comments.js');
 jest.mock('./averages.js');
 
-const getComments = require('./comments.js');
-const getAverages = require('./averages.js');
+const getComments = require('./comments');
+const getAverages = require('./averages');
 
 describe('CLI', () => {
   it('returns help text by default', (done) => {
