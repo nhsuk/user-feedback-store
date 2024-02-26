@@ -59,4 +59,9 @@
         <packageUrl regex="true">^pkg:generic/Microsoft\.PowerShell\.ConsoleHost@.*$</packageUrl>
         <cve>CVE-2024-0057</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[file name: Microsoft.PowerShell.Commands.Utility.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Microsoft\.PowerShell\.Commands\.Utility\.ConsoleHost@.*$</packageUrl>
+        <cve>CVE-2024-0057</cve>
+    </suppress>
 </suppressions>
