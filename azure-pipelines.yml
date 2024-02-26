@@ -46,6 +46,34 @@ stages:
     - script: npm run test
       displayName: 'Test'
 
+    - task: DownloadPipelineArtifact@2
+      displayName: Download OWASP artifact
+      inputs:
+        buildType: "specific"
+        project: "nhsuk.utilities"
+        definition: "[schedule]-owasp-dependency-check-update"
+        buildVersionToDownload: "latestFromBranch"
+        branchName: refs/heads/main
+        artifactName: "owasp"
+        targetPath: "$(Pipeline.Workspace)/owasp"
+        allowPartiallySucceededBuilds: true
+
+    - task: Bash@3
+      displayName: Run OWASP Dependency Check
+      inputs:
+        workingDirectory: $(Pipeline.Workspace)/owasp
+        filePath: $(Pipeline.Workspace)/owasp/run_owasp_scanner.sh
+        arguments: '--scan "$(Build.SourcesDirectory)" --failOnCVSS 8 --project "user-feedback-store" --out "$(System.DefaultWorkingDirectory)/dependency-scan-results" --suppression "$(Build.SourcesDirectory)/owasp-dependency-check-suppressions.xml" --format HTML --format JUNIT --nodePackageSkipDevDependencies --nodeAuditSkipDevDependencies'
+
+    - task: PublishTestResults@2
+      displayName: 'Publish OWASP Dependency Check Results'
+      condition: succeededOrFailed()
+      inputs:
+        testResultsFormat: 'JUnit'
+        testResultsFiles: '$(System.DefaultWorkingDirectory)/dependency-scan-results/*junit.xml'
+        testRunTitle: 'Dependency check'
+        searchFolder: '$(System.DefaultWorkingDirectory)/dependency-scan-results'
+
     - task: SonarCloudAnalyze@1
       displayName: 'Run SonarCloud Code Analysis'
 

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.3.xsd">
+    <suppress>
+        <notes><![CDATA[file name: Azure.Core.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Azure\.Core@.*$</packageUrl>
+        <cve>CVE-2023-36052</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: Azure.Identity.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Azure\.Identity@.*$</packageUrl>
+        <cve>CVE-2023-36415</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: Microsoft.AspNetCore.Mvc.Razor.Extensions.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Microsoft\.AspNetCore\.Mvc\.Razor\.Extensions@.*$</packageUrl>
+        <cve>CVE-2021-24112</cve>
+        <cve>CVE-2021-26701</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: Microsoft.Extensions.Azure.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Microsoft\.Extensions\.Azure@.*$</packageUrl>
+        <cve>CVE-2023-36052</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: JsonPointer.Net.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/JsonPointer\.Net@.*$</packageUrl>
+        <cve>CVE-2022-4742</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: Microsoft.AspNetCore.Razor.Language.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Microsoft\.AspNetCore\.Razor\.Language@.*$</packageUrl>
+        <cpe>cpe:/a:microsoft:.net_core</cpe>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: Microsoft.CodeAnalysis.Razor.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Microsoft\.CodeAnalysis\.Razor@.*$</packageUrl>
+        <cve>CVE-2021-24112</cve>
+        <cve>CVE-2019-1302</cve>
+        <cve>CVE-2020-0603</cve>
+        <cve>CVE-2021-26701</cve>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: Microsoft.PowerShell.SDK.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Microsoft\.PowerShell\.SDK@.*$</packageUrl>
+        <vulnerabilityName>CVE-2024-0057</vulnerabilityName>
+    </suppress>
+    <suppress>
+        <notes><![CDATA[file name: Microsoft.PowerShell.MarkdownRender.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Microsoft\.PowerShell\.MarkdownRender@.*$</packageUrl>
+        <cve>CVE-2024-0057</cve>
+    </suppress>
+</suppressions>
