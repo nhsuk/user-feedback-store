@@ -46,17 +46,24 @@ stages:
     - script: npm run test
       displayName: 'Test'
 
-    - task: DownloadPipelineArtifact@2
-      displayName: Download OWASP artifact
-      inputs:
-        buildType: "specific"
-        project: "nhsuk.utilities"
-        definition: "[schedule]-owasp-dependency-check-update"
-        buildVersionToDownload: "latestFromBranch"
-        branchName: refs/heads/main
-        artifactName: "owasp"
-        targetPath: "$(Pipeline.Workspace)/owasp"
-        allowPartiallySucceededBuilds: true
+    - script: |
+        pat=$(AZURE_DEVOPS_PERSONAL_PAT)
+        azBuildId=$(curl -s -u :$pat \
+          -H "Content-Type: application/json" \
+          "https://dev.azure.com/nhsuk/nhsuk.utilities/_apis/build/latest/1395?branchName=main&resultFilter=succeeded&statusFilter=completed&api-version=7.1-preview.1" | jq '.id')
+        
+        echo "azBuildId" $azBuildId
+        echo $pat | az devops login --org "https://dev.azure.com/nhsuk/"
+
+        az pipelines runs artifact download \
+          --artifact-name owasp \
+          --path $(Pipeline.Workspace)/owasp \
+          --run-id $azBuildId \
+          --org "https://dev.azure.com/nhsuk/" \
+          --project nhsuk.utilities
+        
+        find $(Pipeline.Workspace)/owasp/ -type f -iname "*.sh" -exec chmod +x {} \;
+      displayName: 'Install & Login Azure DevOps Extension'
 
     - task: Bash@3
       displayName: Run OWASP Dependency Check
