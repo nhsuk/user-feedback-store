@@ -4,3 +4,4 @@ globalConfig.json
 terraform/.terraform*
 dist/
 coverage/
+dependency-check-report.html
