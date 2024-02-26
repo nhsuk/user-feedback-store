@@ -18,13 +18,23 @@ stages:
   jobs:
   - job: Test
     steps:
+    - task: Gitleaks@2
+      displayName: 'Scan for secrets'
+      inputs:
+        scanlocation: '.'
+        configtype: 'custom'
+        scanmode: 'nogit'
+        uploadresults: false
+        reportformat: 'json'
+        verbose: true
+
     - task: NodeTool@0
       displayName: 'Install Node.js'
       inputs:
         versionSpec: '20.x'
 
     - script: npm ci
-      displayName: 'Install'
+      displayName: 'Npm Install'
 
     - task: SonarCloudPrepare@1
       displayName: 'Prepare analysis on SonarCloud'
@@ -44,7 +54,7 @@ stages:
           sonar.language=js
 
     - script: npm run test
-      displayName: 'Test'
+      displayName: 'Npm Test'
 
     - script: |
         pat=$(AZURE_DEVOPS_PERSONAL_PAT)
