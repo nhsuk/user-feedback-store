@@ -64,4 +64,9 @@
         <packageUrl regex="true">^pkg:generic/Microsoft\.PowerShell\.Commands\.Utility@.*$</packageUrl>
         <cve>CVE-2024-0057</cve>
     </suppress>
+    <suppress>
+        <notes><![CDATA[file name: Microsoft.PowerShell.Commands.Management.dll]]></notes>
+        <packageUrl regex="true">^pkg:generic/Microsoft\.PowerShell\.Commands\.Management@.*$</packageUrl>
+        <cve>CVE-2024-0057</cve>
+    </suppress>
 </suppressions>
