@@ -10,7 +10,7 @@ const { mockStdout } = require('../mocks');
 let connection;
 let db;
 
-const DATETIME_REGEX = /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}Z/;
+const DATETIME_REGEX = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{3}Z/;
 
 beforeAll(async () => {
   connection = await MongoClient.connect(global.__MONGO_CONNECTION_STRING__);
