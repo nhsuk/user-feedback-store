@@ -3,7 +3,7 @@ terraform {
   required_providers {
     azurerm = {
       source = "hashicorp/azurerm"
-      version = ">= 2.26"
+      version = ">= 3.94.0"
     }
   }
 
@@ -37,18 +37,14 @@ resource "azurerm_storage_account" "storage_account" {
   tags = local.common_tags
 }
 
-resource "azurerm_app_service_plan" "service_plan" {
+resource "azurerm_service_plan" "service_plan" {
   name                = "nhsuk-user-feedback-plan-${var.env}-${local.region_short}"
   location            = data.azurerm_resource_group.rg.location
   resource_group_name = data.azurerm_resource_group.rg.name
-  kind                = "functionapp"
-  reserved            = true
+  os_type             = "Linux"
   tags                = local.common_tags
 
-  sku {
-    tier = "Dynamic"
-    size = "Y1"
-  }
+  sku_name = "Y1"
 }
 
 resource "azurerm_application_insights" "application_insights" {
@@ -83,19 +79,24 @@ resource "azurerm_cosmosdb_account" "db" {
   }
 }
 
-resource "azurerm_function_app" "function_app" {
+resource "azurerm_linux_function_app" "function_app" {
   name                       = "nhsuk-user-feedback-func-${var.env}-${local.region_short}"
   location                   = data.azurerm_resource_group.rg.location
   resource_group_name        = data.azurerm_resource_group.rg.name
-  app_service_plan_id        = azurerm_app_service_plan.service_plan.id
+  service_plan_id            = azurerm_service_plan.service_plan.id
   storage_account_name       = azurerm_storage_account.storage_account.name
   storage_account_access_key = azurerm_storage_account.storage_account.primary_access_key
   tags                       = local.common_tags
 
-  os_type = "linux"
-  version = "~3"
+  functions_extension_version = "~4"
 
   site_config {
+    application_stack {
+      # Currently there is a know issue where terraform will not support Node 20 runtime app setting
+      # https://github.com/hashicorp/terraform-provider-azurerm/issues/23528
+      # Once fixed node_version can be upped to 20 and the deploy.sh file updated to remove the workaround
+      node_version = "18"
+    }
     cors {
       allowed_origins = [var.enable_cors ? "*" : "https://www.nhs.uk"]
     }
@@ -105,7 +106,7 @@ resource "azurerm_function_app" "function_app" {
     FUNCTIONS_WORKER_RUNTIME = "node"
     APPINSIGHTS_INSTRUMENTATIONKEY = azurerm_application_insights.application_insights.instrumentation_key
     APPLICATIONINSIGHTS_CONNECTION_STRING = azurerm_application_insights.application_insights.connection_string
-    WEBSITE_NODE_DEFAULT_VERSION: "~12"
+    WEBSITE_NODE_DEFAULT_VERSION: "~20"
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: azurerm_storage_account.storage_account.primary_connection_string
     WEBSITE_CONTENTSHARE: "nhsuk-user-feedback-func-${var.env}-${local.region_short}"
     MONGO_CONNECTION_STRING: "${azurerm_cosmosdb_account.db.connection_strings.0}&retrywrites=false&maxIdleTimeMS=120000"
