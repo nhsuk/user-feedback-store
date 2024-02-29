@@ -5,7 +5,7 @@ locals {
 locals {
   common_tags = {
     product = "User Feedback"
-    owner = "mike.monteith@nhs.net"
+    owner = "sikander.ali@nhs.net"
     expires = "Never"
     environment = var.env
   }
