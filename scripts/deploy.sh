@@ -52,6 +52,14 @@ terraform -chdir=./terraform apply \
 RESOURCE_GROUP=$(terraform -chdir=./terraform output -raw resource_group_name)
 FUNCTION_APP_NAME=$(terraform -chdir=./terraform output -raw function_app_name)
 
+# Set azure function app runttime setting outside of terraform due to Node 20 runtime app setting not supported at time of this being required
+# https://github.com/hashicorp/terraform-provider-azurerm/issues/23528
+
+az functionapp config set \
+  -g $RESOURCE_GROUP \
+  -n $FUNCTION_APP_NAME \
+  --linux-fx-version "NODE|20"
+
 # Deploy to the functionapp
 az functionapp deployment source config-zip \
   -g $RESOURCE_GROUP \
