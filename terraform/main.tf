@@ -35,6 +35,7 @@ resource "azurerm_storage_account" "storage_account" {
   account_replication_type = "LRS"
 
   tags = local.common_tags
+  min_tls_version                 = "TLS1_2"
 }
 
 resource "azurerm_service_plan" "service_plan" {
