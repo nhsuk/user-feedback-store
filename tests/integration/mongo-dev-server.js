@@ -15,7 +15,7 @@ const mongod = new MongoMemoryServer({
     const uri = await mongod.getUri();
     const actualPort = new URL(uri).port;
 
-    if (actualPort !== PORT) {
+    if (actualPort != PORT) {
       console.error(`Error: Desired port ${PORT} is not available. Using port ${actualPort} instead.`);
     } else {
       console.info(`MongoDB Memory Server running at ${uri}`);
