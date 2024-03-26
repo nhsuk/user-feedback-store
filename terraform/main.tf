@@ -110,7 +110,7 @@ resource "azurerm_linux_function_app" "function_app" {
     WEBSITE_NODE_DEFAULT_VERSION: "~20"
     WEBSITE_CONTENTAZUREFILECONNECTIONSTRING: azurerm_storage_account.storage_account.primary_connection_string
     WEBSITE_CONTENTSHARE: "nhsuk-user-feedback-func-${var.env}-${local.region_short}"
-    MONGO_CONNECTION_STRING: "${azurerm_cosmosdb_account.db.connection_strings.0}&maxIdleTimeMS=120000"
+    MONGO_CONNECTION_STRING: "${azurerm_cosmosdb_account.db.connection_strings.0}"
     SCM_DO_BUILD_DURING_DEPLOYMENT: "true"
   }
 }
