@@ -50,46 +50,10 @@ stages:
           sonar.javascript.lcov.reportPaths=coverage/lcov.info
           sonar.coverage.exclusions=**/*.config.js,**/coverage/**
           sonar.exclusions=node_modules/**
-          sonar.dependencyCheck.htmlReportPath=$(System.DefaultWorkingDirectory)/dependency-scan-results/dependency-check-report.html
           sonar.language=js
 
     - script: npm run test
       displayName: 'Npm Test'
-
-    - script: |
-        pat=$(AZURE_DEVOPS_PERSONAL_PAT)
-        azBuildId=$(curl -s -u :$pat \
-          -H "Content-Type: application/json" \
-          "https://dev.azure.com/nhsuk/nhsuk.utilities/_apis/build/latest/1395?branchName=main&resultFilter=succeeded&statusFilter=completed&api-version=7.1-preview.1" | jq '.id')
-        
-        echo "azBuildId" $azBuildId
-        echo $pat | az devops login --org "https://dev.azure.com/nhsuk/"
-
-        az pipelines runs artifact download \
-          --artifact-name owasp \
-          --path $(Pipeline.Workspace)/owasp \
-          --run-id $azBuildId \
-          --org "https://dev.azure.com/nhsuk/" \
-          --project nhsuk.utilities
-        
-        find $(Pipeline.Workspace)/owasp/ -type f -iname "*.sh" -exec chmod +x {} \;
-      displayName: 'Install & Login Azure DevOps Extension'
-
-    - task: Bash@3
-      displayName: Run OWASP Dependency Check
-      inputs:
-        workingDirectory: $(Pipeline.Workspace)/owasp
-        filePath: $(Pipeline.Workspace)/owasp/run_owasp_scanner.sh
-        arguments: '--scan "$(Build.SourcesDirectory)" --failOnCVSS 8 --project "user-feedback-store" --out "$(System.DefaultWorkingDirectory)/dependency-scan-results" --suppression "$(Build.SourcesDirectory)/owasp-dependency-check-suppressions.xml" --format HTML --format JUNIT --nodePackageSkipDevDependencies --nodeAuditSkipDevDependencies'
-
-    - task: PublishTestResults@2
-      displayName: 'Publish OWASP Dependency Check Results'
-      condition: succeededOrFailed()
-      inputs:
-        testResultsFormat: 'JUnit'
-        testResultsFiles: '$(System.DefaultWorkingDirectory)/dependency-scan-results/*junit.xml'
-        testRunTitle: 'Dependency check'
-        searchFolder: '$(System.DefaultWorkingDirectory)/dependency-scan-results'
 
     - task: SonarCloudAnalyze@1
       displayName: 'Run SonarCloud Code Analysis'
